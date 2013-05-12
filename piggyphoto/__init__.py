@@ -433,6 +433,12 @@ class CameraFile(object):
         file.write(self.to_pixbuf())
         file.close()
 
+    def get_data(self):
+        data = ctypes.pointer(ctypes.c_char())
+        size = ctypes.c_ulong()
+        check(gp.gp_file_get_data_and_size(self._cf, ctypes.byref(data), ctypes.byref(size)))
+        return ctypes.string_at(data, size.value)
+
     def ref(self):
         _check_result(gp.gp_file_ref(self._cf))
 
