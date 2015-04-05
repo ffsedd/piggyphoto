@@ -7,6 +7,14 @@ from __future__ import print_function
 # - libgphoto2 Python bindings by David PHAM-VAN <david@ab2r.com>
 # - ctypes_gphoto2.py by Hans Ulrich Niedermann <gp@n-dimensional.de>
 
+import sys
+import os
+import re
+import ctypes
+import time
+from ctypes import byref
+from .ptp import *
+
 # Some functions return errors which can be fixed by retrying.
 # For example, capture_preview on Canon 550D fails the first time, but subsequent calls are OK.
 # Retries are performed on: camera.capture_preview, camera.capture_image and camera.init()
@@ -23,9 +31,6 @@ unmount_cmd = 'gvfs-mount -s gphoto2'
 #libgphoto2dll = 'libgphoto2.so.2'
 #libgphoto2dll = 'libgphoto2.dylib'
 
-import sys
-import os
-
 # Should search more locations for libgphoto2 - especially improperly installed homebrew installations (/usr/local/lib)
 
 if sys.platform == 'darwin':
@@ -38,9 +43,6 @@ elif sys.platform.startswith("linux"):
 else:
     raise Exception("Platform not supported by gphoto2.")
 
-import re
-import ctypes
-from ctypes import byref
 gp = ctypes.CDLL(libgphoto2dll)
 # Needed to ensure context memory address is not truncated to 32 bits
 gp.gp_context_new.restype = ctypes.c_void_p
@@ -62,9 +64,6 @@ def library_version(verbose = True):
     return v
 
 #ctypes.c_char_p = c_char_p
-
-import time
-from .ptp import *
 
 # gphoto structures
 """ From 'gphoto2-camera.h'
