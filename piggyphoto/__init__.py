@@ -1,3 +1,4 @@
+from __future__ import print_function
 # piggyphoto.py
 # Copyright (C) 2010 Alex Dumitrache
 # Copyright (C) 2012, 2013 Marian Beermann
@@ -24,6 +25,7 @@ unmount_cmd = 'gvfs-mount -s gphoto2'
 
 import sys
 import os
+
 # Should search more locations for libgphoto2 - especially improperly installed homebrew installations (/usr/local/lib)
 
 if sys.platform == 'darwin':
@@ -938,7 +940,7 @@ class CameraWidget(object):
                         count += 1
 
                 if count == len(r):
-                    print(" "*55, "[%s … %s]" % (lower, upper))
+                    print(" " * 55, "[%s .. %s]" % (lower, upper))
                 else:
                     print(str(self.choices))
             else:

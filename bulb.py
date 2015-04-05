@@ -1,3 +1,4 @@
+from __future__ import print_function
 from pprint import pprint
 import piggyphoto as pp
 import os

@@ -1,3 +1,4 @@
+from __future__ import print_function
 import piggyphoto as pp
 
 print("libgphoto2 version:")
