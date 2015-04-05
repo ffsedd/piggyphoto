@@ -12,7 +12,7 @@ import os
 import re
 import ctypes
 import time
-from ctypes import byref
+from ctypes import byref, util as ctype_util
 from .ptp import *
 
 # Some functions return errors which can be fixed by retrying.
@@ -25,24 +25,13 @@ retries = 1
 # it locks the device.
 unmount_cmd = 'gvfs-mount -s gphoto2'
 
-#libgphoto2dll = 'libgphoto2.so.6'
-#libgphoto2dll = 'libgphoto2.so.2.4.0'
-#libgphoto2dll = 'libgphoto2.so.2.4'
-#libgphoto2dll = 'libgphoto2.so.2'
-#libgphoto2dll = 'libgphoto2.dylib'
+libgphoto2dll = ctype_util.find_library("gphoto2")
 
-# Should search more locations for libgphoto2 - especially improperly installed homebrew installations (/usr/local/lib)
+if libgphoto2dll == None:
+    print("libgphoto2 library not found")
+    sys.exit(-1)
 
-if sys.platform == 'darwin':
-    libgphoto2dll = 'libgphoto2.dylib'
-    # kill PTPCamera to free camera lock
-    os.system("killall PTPCamera")
-    # need to kill PTPCamera before use
-elif sys.platform.startswith("linux"):
-    libgphoto2dll = "libgphoto2.so"
-else:
-    raise Exception("Platform not supported by gphoto2.")
-
+print("Loading libgphoto2 DLL: " + libgphoto2dll)
 gp = ctypes.CDLL(libgphoto2dll)
 # Needed to ensure context memory address is not truncated to 32 bits
 gp.gp_context_new.restype = ctypes.c_void_p
