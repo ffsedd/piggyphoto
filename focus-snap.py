@@ -1,7 +1,7 @@
 import piggyphoto, pygame
 import os
 import time
-import Image, ImageFilter, ImageChops, ImageStat
+from PIL import Image, ImageFilter, ImageChops, ImageStat
 from collections import deque
 
 import focus
