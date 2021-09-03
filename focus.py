@@ -1,5 +1,5 @@
 from __future__ import print_function
-import Image, ImageFilter, ImageChops, ImageStat
+from PIL import Image, ImageFilter, ImageChops, ImageStat
 import time
 
 def estimate(file, s=5):
