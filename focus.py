@@ -18,5 +18,5 @@ def estimate(file, s=5):
 
 if __name__ == "__main__":
     t = time.time()
-    print(eval_focus("preview.jpg"))
+    print(estimate("preview.jpg"))
     print(time.time()-t)
